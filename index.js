@@ -1,5 +1,5 @@
 const express = require('express');
-
+// Começando o projeto #VQV
 const app = express();
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
