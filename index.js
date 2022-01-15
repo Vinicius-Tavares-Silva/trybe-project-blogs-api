@@ -1,6 +1,14 @@
 const express = require('express');
-// Começando o projeto #VQV
+const error = require('./middlewares/error');
+const users = require('./controllers/users/router');
+const { login } = require('./controllers/login/login');
+
 const app = express();
+app.use(express.json());
+
+app.post('/login', login);
+app.use('/user', users);
+app.use(error);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
