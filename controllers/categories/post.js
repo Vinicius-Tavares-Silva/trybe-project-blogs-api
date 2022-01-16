@@ -1,13 +1,15 @@
-const { Users } = require('../../models');
-const authService = require('../../services/auth');
+const { Categories } = require('../../models');
+const categoriesService = require('../../services/categories');
 
 module.exports = async (req, res, next) => {
   const payload = req.body;
-
+  const payloadValidate = categoriesService(payload);
   try {
-    const { password: _password, ...userWithoutPassword } = await Users.create(payload);
-    const token = authService.genToken(userWithoutPassword);
-    return res.status(201).send({ token });
+    if (payloadValidate) {
+      return res.status(400).send(payloadValidate);
+    }
+    const categories = await Categories.create(payload);
+    return res.status(201).send(categories);
   } catch (err) {
     next(err);
   }
